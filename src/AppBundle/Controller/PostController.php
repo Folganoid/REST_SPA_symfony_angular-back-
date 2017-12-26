@@ -8,10 +8,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PostController extends Controller
 {
     /**
+     * @ApiDoc(
+     *     resource=true,
+     *     description="Get one single post",
+     *     requirements={
+     *          {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="The post unique identifier"
+     *          }
+     *     },
+     *     section="posts"
+     * )
+     *
      * @Route("/api/posts/{id}", name="show_post")
      * @Method({"GET"})
      */
@@ -45,6 +60,20 @@ class PostController extends Controller
 
 
     /**
+     * @ApiDoc(
+     *     description="Create a new post",
+     *
+     *     statusCodes = {
+     *         201="Creation with success",
+     *         400="Invalid form",
+     *     },
+     *     responseMap={
+     *          201 = {"class"=Post::class},
+     *     },
+     *     section="posts"
+     *
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      * @Route("/api/posts", name="create_post")
