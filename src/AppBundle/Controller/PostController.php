@@ -77,14 +77,14 @@ class PostController extends Controller
      * @param Request $request
      * @return JsonResponse
      * @Route("/api/posts", name="create_post")
-     * @Method({"Post"})
+     * @Method({"POST"})
      */
     public function createAction(Request $request) {
 
         $data = $request->getContent();
         $post = $this->get('jms_serializer')->deserialize($data, 'AppBundle\Entity\Post', 'json');
 
-        $response = $this->validatePost($data);
+        $response = $this->validatePost($post);
 
         if (!empty($response)) {
             return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
@@ -223,7 +223,6 @@ class PostController extends Controller
 
         return new JsonResponse($response, 200);
     }
-
 
 
     public function validatePost($data): array
